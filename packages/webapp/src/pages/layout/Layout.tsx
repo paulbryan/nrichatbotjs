@@ -10,8 +10,9 @@ const Layout = () => {
       <header className={styles.header}>
         <div className={styles.headerContainer}>
           <Link to="/" className={styles.headerTitleContainer}>
-            <h3 className={styles.headerTitle}>GPT + Enterprise data | Sample</h3>
-          </Link>
+            <h3 className={styles.headerTitle}>
+                            <img src="https://nri-anz.com/wp-content/uploads/2023/08/logo.svg" className="" alt="NRI" decoding="async" />
+                        </h3>  </Link>
           <nav>
             <ul className={styles.headerNavList}>
               <li>

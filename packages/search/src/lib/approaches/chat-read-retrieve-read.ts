@@ -11,19 +11,20 @@ import { type Message, messagesToString } from '../message.js';
 import { MessageBuilder } from '../message-builder.js';
 import { getTokenLimit } from '../tokens.js';
 
-const SYSTEM_MESSAGE_CHAT_CONVERSATION = `Assistant helps the Consto Real Estate company customers with support questions regarding terms of service, privacy policy, and questions about support requests. Be brief in your answers.
-Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
+const SYSTEM_MESSAGE_CHAT_CONVERSATION = `You are a human resources expert working for NRI. Be brief in your answers. Use 'you' to refer to the individual asking the questions even if they ask with 'I'.  Unless specified otherwise, assume the individual is an full time employee of NRI working in Australia.
+Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don't know. DO NOT generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
 For tabular information return it as an html table. Do not return markdown format. If the question is not in English, answer in the language used in the question.
-Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brackets to reference the source, for example: [info1.txt]. Don't combine sources, list each source separately, for example: [info1.txt][info2.pdf].
+Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brackets to reference the source, for example [info1.txt]. Don't combine sources, list each source separately, for example [info1.txt][info2.pdf].
+Always add this text to the response footer 'Please email people@nri-anz.com if you have any further questions'.
 {follow_up_questions_prompt}
 {injected_prompt}
 `;
 
 const FOLLOW_UP_QUESTIONS_PROMPT_CONTENT = `Generate 3 very brief follow-up questions that the user would likely ask next.
 Enclose the follow-up questions in double angle brackets. Example:
-<<Am I allowed to invite friends for a party?>>
-<<How can I ask for a refund?>>
-<<What If I break something?>>
+<<What should I do when I am feeling unwell?>>
+<<What is the NRI dress code?>>
+<<Can I work from home?>>
 
 Do no repeat questions that have already been asked.
 Make sure the last question ends with ">>".`;
@@ -38,10 +39,10 @@ If you cannot generate a search query, return just the number 0.
 `;
 
 const QUERY_PROMPT_FEW_SHOTS: Message[] = [
-  { role: 'user', content: 'What happens if a payment error occurs?' },
-  { role: 'assistant', content: 'Show support for payment errors' },
-  { role: 'user', content: 'can I get refunded if cannot travel?' },
-  { role: 'assistant', content: 'Refund policy' },
+  { role: 'user', content: 'What should I do when I am feeling unwell?' },
+  { role: 'assistant', content: 'Contact your manager and refer to the leave policy' },
+  { role: 'user', content: 'What is the dress code?' },
+  { role: 'assistant', content: 'Business casual' },
 ];
 
 /**
